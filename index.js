@@ -34,58 +34,64 @@ let lotteryData = [
 ];
 
 // Root endpoint
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     res.send('Hello World');
 });
 
 // Get all lottery data
-app.get('/lottery', (req, res) => {
+app.get('/lottery', async (req, res) => {
     setTimeout(() => {
+        // Simulating a 1-second delay
         res.json(lotteryData);
-    }, 1000);  // Simulating a 1-second delay
+    }, 1000);  
 });
 
 // Get a single lottery entry by ID
-app.get('/lottery/:id', (req, res) => {
+app.get('/lottery/:id', async (req, res) => {
     setTimeout(() => {
         const entry = lotteryData.find(e => e.id === parseInt(req.params.id));
         if (!entry) return res.status(404).send('Lottery entry not found');
+        // Simulating a 1-second delay
         res.json(entry);
-    }, 1000);  // Simulating a 1-second delay
+    }, 1000);  
 });
 
 // Create a new lottery entry
-app.post('/lottery', (req, res) => {
+app.post('/lottery', async (req, res) => {
     setTimeout(() => {
         const newEntry = {
-            id: lotteryData.length + 1,  // Simple ID assignment
+            // Simple ID assignment
+            id: lotteryData.length + 1,  
             ...req.body
         };
         lotteryData.push(newEntry);
+        // Simulating a 1-second delay
         res.status(201).json(newEntry);
-    }, 1000);  // Simulating a 1-second delay
+    }, 1000);  
 });
 
 // Update a lottery entry by ID
-app.put('/lottery/:id', (req, res) => {
+app.put('/lottery/:id', async (req, res) => {
     setTimeout(() => {
         const entry = lotteryData.find(e => e.id === parseInt(req.params.id));
         if (!entry) return res.status(404).send('Lottery entry not found');
 
         Object.assign(entry, req.body);
+        // Simulating a 1-second delay
         res.json(entry);
-    }, 1000);  // Simulating a 1-second delay
+    }, 1000);  
 });
 
 // Delete a lottery entry by ID
-app.delete('/lottery/:id', (req, res) => {
+app.delete('/lottery/:id', async (req, res) => {
     setTimeout(() => {
         const entryIndex = lotteryData.findIndex(e => e.id === parseInt(req.params.id));
         if (entryIndex === -1) return res.status(404).send('Lottery entry not found');
 
         lotteryData.splice(entryIndex, 1);
+        // Simulating a 1-second delay
         res.status(204).send();
-    }, 1000);  // Simulating a 1-second delay
+    }, 1000);  
 });
 
 app.listen(
